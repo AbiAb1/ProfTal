@@ -19,16 +19,16 @@ if (isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
 
     // Query to fetch task details based on TaskID
-    $sql_task_details = "SELECT * FROM tasks WHERE TaskID = '$task_id'";
-    $result_task_details = mysqli_query($conn, $sql_task_details);
+    $sql_taskdetails = "SELECT * FROM tasks WHERE TaskID = '$task_id'";
+    $result_taskdetails = mysqli_query($conn, $sql_taskdetails);
 
     // Check if task details are found
-    if (mysqli_num_rows($result_task_details) > 0) {
-        $row_task_details = mysqli_fetch_assoc($result_task_details);
-        $task_title = $row_task_details['Title'];
-        $task_description = $row_task_details['taskContent'];
-        $task_type = $row_task_details['Type'];
-        $task_due_date = $row_task_details['Duedate']; // Assuming DueDate is the column name
+    if (mysqli_num_rows($result_taskdetails) > 0) {
+        $row_taskdetails = mysqli_fetch_assoc($result_taskdetails);
+        $task_title = $row_taskdetails['Title'];
+        $task_description = $row_taskdetails['taskContent'];
+        $task_type = $row_taskdetails['Type'];
+        $task_due_date = $row_taskdetails['Duedate']; // Assuming DueDate is the column name
     } else {
         echo "Task details not found.";
         exit(); // Exit if task details are not found
@@ -40,6 +40,29 @@ if (isset($_GET['task_id'])) {
 
 // Format Due Date
 $formatted_due_date = date('F j, Y \a\t g:i A', strtotime($task_due_date));
+
+// Handle file upload if form is submitted
+$submitted = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
+    $submitted = true;
+    $file_name = $_FILES['fileUpload']['name'];
+    $file_tmp = $_FILES['fileUpload']['tmp_name'];
+    $file_size = $_FILES['fileUpload']['size'];
+    $file_error = $_FILES['fileUpload']['error'];
+
+    if ($file_error === 0) {
+        // Specify the upload directory
+        $upload_dir = 'uploads/';
+        // Move uploaded file to designated directory
+        if (move_uploaded_file($file_tmp, $upload_dir . $file_name)) {
+            echo '<p class="text-success">File uploaded successfully.</p>';
+        } else {
+            echo '<p class="text-danger">Error uploading file.</p>';
+        }
+    } else {
+        echo '<p class="text-danger">Error: ' . $file_error . '</p>';
+    }
+}
 
 // Close database connection
 mysqli_close($conn);
@@ -95,7 +118,7 @@ mysqli_close($conn);
         }
         .taskDueDate {
             margin-top: -15px;
-            margin-bottom: 50px; /* Adjusted from 50px to 20px */
+            margin-bottom: 20px; /* Adjusted from 50px to 20px */
             font-size: 14px; /* Adjusted font size */
             color: #999; /* Adjusted color */
         }
@@ -154,7 +177,23 @@ mysqli_close($conn);
                 <div class="col-md-6">
                     <div class="p-3 bg-light rounded mb-3" style="margin-left:50px;">
                         <h5 class="font-weight-bold mb-3">Additional Detail 1</h5>
-                        <p class="text-muted">Content for detail 1 goes here.</p>
+                        
+                        <!-- File Upload Form -->
+                        <form action="taskdetails.php?task_id=<?php echo htmlspecialchars($_GET['task_id']); ?>" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="fileUpload">Upload File:</label>
+                                <input type="file" class="form-control-file" id="fileUpload" name="fileUpload" <?php if ($submitted) echo 'disabled'; ?>>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><?php echo $submitted ? 'Unsubmit' : 'Submit'; ?></button>
+                        </form>
+                        
+                        <!-- PHP Logic to Handle File Upload -->
+                        <?php
+                        if ($submitted) {
+                            echo '<p class="text-muted">File upload disabled after submission.</p>';
+                        }
+                        ?>
+                        
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -165,9 +204,7 @@ mysqli_close($conn);
                 </div>
             </div>
 
-           
         </main>
-        <!-- MAIN -->
     </section>
 
     <!-- =========== Scripts =========  -->
