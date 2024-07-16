@@ -78,23 +78,6 @@
         .name-group .medium-input {
             flex: 0 0 130px;
         }
-        /*.form-group .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .form-group .checkbox-group input[type="checkbox"] {
-            margin-right: 10px;
-            cursor: pointer;
-            transform: scale(1.2); /* Slightly increase checkbox size for better visibility 
-        }
-        .form-group .checkbox-group p {
-            margin: 0;
-            padding: 0;
-            display: block;
-            cursor: text;
-            line-height: 1.5; /* Adjust line height for better alignment 
-        }*/
         .checkbox-list {
             white-space: nowrap
         }
@@ -119,13 +102,15 @@
             vertical-align: middle;
         }
     </style>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
 <div class="registration-form">
     <h2>Register</h2>
     <form id="registration-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <div class="name-group">
+    <div class="name-group">
             <div class="form-group">
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" required>
@@ -164,16 +149,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
         </div>
         <div class="checkbox-list">
                 <input type="checkbox" id="certification1" name="certification1" class="certification1" required>
@@ -217,13 +194,11 @@
         const birthday = document.getElementById('birthday').value;
         const age = document.getElementById('age').value;
         const address = document.getElementById('address').value;
-        const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
         const certification1 = document.getElementById('certification1').checked;
         const certification2 = document.getElementById('certification2').checked;
 
-        registerButton.disabled = !(firstname && middleinitial && lastname && gender && birthday && age && address && username && email && password && certification1 && certification2);
+        registerButton.disabled = !(firstname && middleinitial && lastname && gender && birthday && age && address && email && certification1 && certification2);
     }
 
     const formElements = document.querySelectorAll('#registration-form input, #registration-form select');
@@ -235,75 +210,85 @@
 </script>
 
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form data
-    $firstname = htmlspecialchars($_POST['firstname']);
-    $middleinitial = htmlspecialchars($_POST['middleinitial']);
-    $lastname = htmlspecialchars($_POST['lastname']);
-    $gender = htmlspecialchars($_POST['gender']);
-    $birthday = htmlspecialchars($_POST['birthday']);
-    $age = htmlspecialchars($_POST['age']);
-    $address = htmlspecialchars($_POST['address']);
-    $username = htmlspecialchars($_POST['username']);
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    require 'vendor/autoload.php';
 
-    // Hash the password before storing
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-    // Example department ID and role (update as necessary)
-    $dept_ID = 1; // Default or fetched from another source
-    $role = 'Teacher'; // Default or fetched from another source
-    $status = 'pending'; // Default status
-
-    // Database connection setup
-    $dsn = 'mysql:host=localhost;dbname=proftal';
-    $db_username = 'root';
-    $db_password = '';
-
-    try {
-        $pdo = new PDO($dsn, $db_username, $db_password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Prepare SQL statement
-        $sql = 'INSERT INTO users (first_name, middle_initial, last_name, gender, birthday, age, address, username, email, password, dept_ID, role, status)
-                VALUES (:first_name, :middle_initial, :last_name, :gender, :birthday, :age, :address, :username, :email, :password, :dept_ID, :role, :status)';
-
-        $stmt = $pdo->prepare($sql);
-
-        // Bind parameters
-        $stmt->bindParam(':first_name', $firstname);
-        $stmt->bindParam(':middle_initial', $middleinitial);
-        $stmt->bindParam(':last_name', $lastname);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':birthday', $birthday);
-        $stmt->bindParam(':age', $age);
-        $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashed_password);
-        $stmt->bindParam(':dept_ID', $dept_ID);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':status', $status);
-
-        // Execute the prepared statement
-        $stmt->execute();
-
-        // Success message and redirection
-        echo "<script>
-                alert('Registration successful!');
-                window.location.href = 'http://localhost/proftal/register.php';
-              </script>";
-
-    } catch (PDOException $e) {
-        // Log PDO error
-        file_put_contents('pdo_error_log.txt', $e->getMessage(), FILE_APPEND);
-        echo "<script>alert('An error occurred. Please try again later.');</script>";
+    function generateRandomString($length = 6) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
-}
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the form data
+        $firstname = htmlspecialchars($_POST['firstname']);
+        $middleinitial = htmlspecialchars($_POST['middleinitial']);
+        $lastname = htmlspecialchars($_POST['lastname']);
+        $gender = htmlspecialchars($_POST['gender']);
+        $birthday = htmlspecialchars($_POST['birthday']);
+        $age = htmlspecialchars($_POST['age']);
+        $address = htmlspecialchars($_POST['address']);
+        $email = htmlspecialchars($_POST['email']);
+
+        // Generate default username and password
+        $username = generateRandomString();
+        $password = $username;
+
+        // Example department ID and role (update as necessary)
+        $dept_ID = 1; // Default or fetched from another source
+        $role = 'Teacher'; // Default or fetched from another source
+        $status = 'pending'; // Default status
+
+        // Database connection setup
+        $mysqli = new mysqli('localhost', 'root', '', 'proftal');
+
+        // Check connection
+        if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        }
+
+        // Prepare and bind
+        $stmt = $mysqli->prepare("INSERT INTO users (username, password, first_name, middle_initial, last_name, gender, birthday, age, address, email, dept_ID, role, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssssssss", $username, $password, $firstname, $middleinitial, $lastname, $gender, $birthday, $age, $address, $email, $dept_ID, $role, $status);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "<script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Registration successful! You will receive an email once your registration is approved by an admin.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'login.php'; // Redirect to login or another page
+                });
+            </script>";
+        } else {
+            echo "<script>
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Error: " . $stmt->error . "',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>";
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $mysqli->close();
+    }
 ?>
+
+
 </body>
 </html>
