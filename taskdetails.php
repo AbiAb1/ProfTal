@@ -130,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             $submitted = true;
-            echo '<p class="text-success">All files uploaded and marked as submitted.</p>';
         }
     } elseif (isset($_POST['unsubmit'])) {
         // Unsubmit process
@@ -204,7 +203,156 @@ if (isset($_POST['unsubmit'])) {
 // Close database connection
 mysqli_close($conn);
 ?>
+<style>
+        .taskDetails {
+            padding: 20px;
+            border-radius: 8px;
+            margin-left: 50px; /* Margin only on the left */
+            margin-right: 50px; /* Margin only on the right */
+            position: relative; /* Added for positioning the label */
+        }
+        .taskDetails h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Distribute items evenly */
+        }
+        .taskDetails p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+        }
+        .taskDetails .taskType {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .icon-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px; /* Adjust circle size */
+            height: 60px; /* Adjust circle size */
+            background-color: #9B2035; /* Circle background color */
+            border-radius: 50%; /* Make it a circle */
+        }
+        .icon1 {
+            color: white; /* Icon color */
+            font-size: 24px; /* Adjust icon size */
+        }
+        .taskDueDate {
+            margin-top: -15px;
+            margin-bottom: 50px; /* Adjusted from 50px to 20px */
+            font-size: 14px; /* Adjusted font size */
+            color: #999; /* Adjusted color */
+        }
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%; /* Make it full width */
+            max-height: 100%;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+        }
+        .file-upload input[type="file"] {
+            display: none; /* Hide the file input */
+        }
+        .plus-icon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #9B2035;
+        }
+        .center-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            margin: 50px;
+        }
+        .submit-button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background-color: #9B2035;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Smooth transition */
+        }
 
+        .submit-button:hover {
+            background-color: #6f1626; /* Hover color */
+            color:#fff;
+        }
+        .submit-button[disabled] {
+            background-color: #ddd; /* Grey out when disabled */
+            color: #666;
+            cursor: not-allowed;
+        }
+        .status-label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 25px;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 100px;
+        }
+        .status-label.assigned {
+            color: green;
+        }
+        .status-label.missing {
+            color: red;
+        }
+        .file-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .file-container .file {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* Needed for the remove button */
+        }
+        .file-container .file span {
+            font-size: 14px;
+            color: #333;
+            flex-grow: 1;
+            text-align: left;
+        }
+        .remove-file {
+            cursor: pointer;
+            color: red;
+            font-size: 20px;
+            position: absolute; /* Positioning the remove button */
+            right: 10px; /* Adjust as needed */
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .output-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-self: flex-start; /* Aligns the title to the leftmost side */
+}
+    </style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -315,7 +463,7 @@ mysqli_close($conn);
 
             <!-- Uploaded Files and File Management -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="p-3 bg-light rounded mb-3" style="margin-left:50px;">
                         <h5 class="font-weight-bold mb-3">Your Output</h5>
                         
@@ -356,10 +504,13 @@ mysqli_close($conn);
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="p-3 bg-light rounded mb-3" style="margin-right:50px;">
-                        <h5 class="font-weight-bold mb-3">Additional Detail 2</h5>
-                        <p>Content for detail 2 goes here.</p>
+                <div class="col-md-5">
+                    <div class="p-3 bg-light rounded mb-3">
+                        <h5 class="font-weight-bold mb-3">Private Message</h5>
+                        <p class="text-muted">Content for detail 2 goes here.</p>
+                        <div class="message-container">
+                            <input type="text" class="form-control" id="messageInput" placeholder="Type your message here..." />
+                            <button class="btn submit-button" id="sendButton">Send</button>
                     </div>
                 </div>
             </div>
@@ -416,5 +567,67 @@ mysqli_close($conn);
         <!-- MAIN -->
     </section>
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('fileInput');
+    const fileContainer = document.getElementById('fileContainer');
+    const plusIcon = document.querySelector('.plus-icon');
+    let files = [];
+
+    // Plus icon click handler
+    plusIcon.addEventListener('click', function(event) {
+        fileInput.click(); // Simulate a click on the file input
+        event.stopPropagation(); // Prevent the event from bubbling up
+    });
+
+    // File input change event listener
+    fileInput.addEventListener('change', function(event) {
+        const selectedFiles = Array.from(event.target.files);
+        files = files.concat(selectedFiles);
+
+        renderFileList();
+    });
+
+    fileContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-file')) {
+            const index = event.target.getAttribute('data-index');
+            files.splice(index, 1);
+            renderFileList();
+            event.stopPropagation(); // Prevent reopening the file explorer
+        }
+    });
+
+    function renderFileList() {
+        fileContainer.innerHTML = ''; // Clear the container
+
+        if (files.length > 0) {
+            document.getElementById('no-file-message').style.display = 'none';
+            document.getElementById('submitButton').disabled = false;
+
+            files.forEach((file, index) => {
+                const fileDiv = document.createElement('div');
+                fileDiv.classList.add('file');
+                fileDiv.innerHTML = `
+                    <span>${file.name}</span>
+                    <ion-icon class="remove-file" name="close-circle-outline" data-index="${index}"></ion-icon>
+                `;
+                fileContainer.appendChild(fileDiv);
+            });
+        } else {
+            document.getElementById('no-file-message').style.display = 'block';
+            document.getElementById('submitButton').disabled = true;
+        }
+    }
+});
+
+</script>
+
 </body>
 </html>
