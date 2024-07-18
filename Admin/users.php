@@ -1,186 +1,367 @@
-    <?php
-    include 'connection.php';
+<?php
+include 'connection.php';
 
-    // Handle user approval or rejection
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = intval($_POST['id']);
-        $action = $_POST['action'];
+// Handle user approval or rejection
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = intval($_POST['id']);
+    $action = $_POST['action'];
 
-        if ($action === 'approve') {
-            $stmt = $conn->prepare("UPDATE users SET status = 'approved' WHERE user_ID = ?");
-        } elseif ($action === 'reject') {
-            $stmt = $conn->prepare("UPDATE users SET status = 'rejected' WHERE user_ID = ?");
-        }
-
-        if (isset($stmt)) {
-            $stmt->bind_param("i", $id);
-            $response = array('status' => 'error');
-            if ($stmt->execute()) {
-                $response['status'] = 'success';
-            }
-            $stmt->close();
-            echo json_encode($response);
-            $conn->close();
-            exit;
-        }
+    if ($action === 'approve') {
+        $stmt = $conn->prepare("UPDATE users SET status = 'approved' WHERE user_ID = ?");
+    } elseif ($action === 'reject') {
+        $stmt = $conn->prepare("UPDATE users SET status = 'rejected' WHERE user_ID = ?");
     }
 
-    // Fetch pending users
-    $sql = "SELECT user_ID, first_name, middle_initial, last_name, role, date_registered FROM users WHERE status = 'pending'";
-    $result = $conn->query($sql);
+    if (isset($stmt)) {
+        $stmt->bind_param("i", $id);
+        $response = array('status' => 'error');
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+        }
+        $stmt->close();
+        echo json_encode($response);
+        $conn->close();
+        exit;
+    }
+}
 
-    $users = array();
+// Fetch users based on status
+$statuses = ['pending', 'approved', 'rejected'];
+$usersByStatus = [];
+
+foreach ($statuses as $status) {
+    $stmt = $conn->prepare("SELECT user_ID, first_name, middle_initial, last_name, role, date_registered FROM users WHERE status = ?");
+    $stmt->bind_param("s", $status);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
     while ($row = $result->fetch_assoc()) {
         $users[] = $row;
     }
-    $conn->close();
-    ?>
+    $usersByStatus[$status] = $users;
+    $stmt->close();
+}
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Approval</title>
-        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-        <link href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/styles.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add FontAwesome CDN -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <style>
-            .container {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-                gap: 20px; /* Gap between grid items */
-                margin: 0 auto; /* Center the grid */
-            }
-            h1 {
-                margin-bottom: 15px;
-            }
-            .user-card {
-                border: 1px solid #ddd;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .user-card h2 {
-                margin: 0;
-                font-size: 1.2em;
-            }
-            .user-card .details {
-                flex: 1;
-                margin-right: 20px;
-            }
-            .user-card .actions {
-                display: flex;
-                gap: 10px; /* Add space between icons */
-            }
-            .user-card .actions i {
-                font-size: 1.5em; /* Adjust size of icons */
-                cursor: pointer; /* Pointer cursor on hover */
-                transition: color 0.3s; /* Smooth color change */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px; /* Set fixed width for the circle */
-                height: 40px; /* Set fixed height for the circle */
-                border-radius: 50%; /* Make the border round */
-                border: 2px solid; /* Border thickness */
-            }
-            .user-card .actions .fa-check {
-                border-color: green; /* Green border for check icon */
-                color: white; /* Green color for check icon */
-                background-color: green;
-            }
-            .user-card .actions .fa-times {
-                border-color: red; /* Red border for times icon */
-                color: white; /* Red color for times icon */
-                background-color: red;
-            }
-            .user-card .actions i:hover {
-                color: #007bff; /* Change color on hover */
-            }
-        </style>
+$conn->close();
+?>
 
-    </head>
-    <body>
-        <!-- SIDEBAR -->
-        <section id="sidebar">
-            <a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
-            <?php include 'navbar.php'; ?>
-        </section>
-        <!-- SIDEBAR -->
-        <section id="content">
-            <!-- NAVBAR -->
-            <?php include 'topbar.php'; ?>
-            <!-- NAVBAR -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Approval</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        h1 {
+            margin-bottom: 15px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-            <!-- MAIN -->
-            <main>
-                <h1>Pending User Approvals</h1>
-                <div class="container">
-                    <?php foreach ($users as $user): ?>
-                    <div class="user-card">
-                        <div class="details">
-                            <h2><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></h2>
-                            <p><strong>Role:</strong> <?php echo htmlspecialchars($user['role']); ?></p>
-                            <p><strong>Registered on:</strong> <?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></p>
-                        </div>
-                        <div class="actions">
-                            <i class="fas fa-check" onclick="approveUser(<?php echo $user['user_ID']; ?>)" title="Approve"></i>
-                            <i class="fas fa-times" onclick="rejectUser(<?php echo $user['user_ID']; ?>)" title="Reject"></i>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
+        .tabs {
+            display: flex;
+            gap: 10px;
+        }
+        .tabs button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            background-color: #f2f2f2;
+            transition: background-color 0.3s;
+            border-bottom: 2px solid transparent; /* Add bottom border to tab links */
+        }
+        .tabs button.active {
+            border-color: red; /* Red border for active tab */
+        }
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff; /* Set table background color to white */
+        }
+        .user-table th, .user-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            background-color: #fff; /* Set cell background color to white */
+        }
+        .user-table th {
+            background-color: #f2f2f2;
+        }
+        .user-table .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .user-table .actions i {
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .user-table .actions .fa-check {
+            color: green;
+        }
+        .user-table .actions .fa-times {
+            color: red;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container .search-bar {
+            display: none;
+            width: 100%; /* Adjust width of search bar */
+            max-width: 300px; /* Set a maximum width */
+        }
+
+        .search-bar input {
+            width: 200px; /* Adjust width as needed */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-container .search-icon {
+            cursor: pointer;
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
+        <?php include 'navbar.php'; ?>
+    </section>
+    <!-- SIDEBAR -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <?php include 'topbar.php'; ?>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <h1>User Management</h1>
+            <div class="header">
+                <div class="tabs">
+                    <button class="tablink" onclick="openTab('pending')" id="defaultOpen">Pending</button>
+                    <button class="tablink" onclick="openTab('approved')">Approved</button>
+                    <button class="tablink" onclick="openTab('rejected')">Rejected</button>
                 </div>
-            </main>
-        </section>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon" onclick="toggleSearchBar()"></i>
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for names..">
+                    </div>
+                </div>
+            </div>
+            <div id="pending" class="tabcontent">
+                <table class="user-table" id="pendingTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Date Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usersByStatus['pending'] as $user): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['role']); ?></td>
+                            <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
+                            <td class="actions">
+                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'approve')" title="Approve"></i>
+                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'reject')" title="Reject"></i>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div id="approved" class="tabcontent">
+                <table class="user-table" id="approvedTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Date Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usersByStatus['approved'] as $user): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['role']); ?></td>
+                            <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
+                            <td class="actions">
+                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'reject')" title="Reject"></i>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div id="rejected" class="tabcontent">
+                <table class="user-table" id="rejectedTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Date Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usersByStatus['rejected'] as $user): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['role']); ?></td>
+                            <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
+                            <td class="actions">
+                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'approve')" title="Approve"></i>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </section>
 
-        <script>
-            function approveUser(id) {
-                modifyUserStatus(id, 'approve');
+    <script>
+        function toggleSearchBar() {
+            var searchBar = document.querySelector('.search-bar');
+            searchBar.style.display = searchBar.style.display === 'none' || searchBar.style.display === '' ? 'block' : 'none';
+        }
+
+        function filterTable() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            var activeTable = document.querySelector('.tabcontent:target .user-table');
+            if (!activeTable) {
+                activeTable = document.getElementById("pendingTable");
             }
-
-            function rejectUser(id) {
-                modifyUserStatus(id, 'reject');
-            }
-
-            function modifyUserStatus(id, action) {
-                fetch('approve_user.php', { // Ensure this URL is correct
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `id=${id}&action=${action}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Server response:', data); // Debugging output
-                    if (data.status === 'success') {
-                        if (data.email_status === 'sent') {
-                            alert(action === 'approve' ? 'User approved and notified via email.' : 'User rejected and notified via email.');
-                        } else if (data.email_status === 'failed') {
-                            alert('User status updated, but email notification failed. Error: ' + (data.email_error || 'Unknown error'));
-                        } else {
-                            alert('User status updated.');
+            tr = activeTable.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                tr[i].style.display = "none"; // Hide the row initially
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found
+                            break; // Stop checking other cells in the same row
                         }
-                        location.reload(); // Reload to reflect changes
-                    } else {
-                        alert('An error occurred: ' + (data.error || 'Please try again.'));
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
+                }
             }
+        }
 
-        </script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <script src="assets/js/script.js"></script>
-    </body>
-    </html>
+        function confirmAction(id, action) {
+            var actionText = action === 'approve' ? 'approve' : 'reject';
+            Swal.fire({
+                title: `Are you sure you want to ${actionText} this user?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Yes, ${actionText} it!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    modifyUserStatus(id, action);
+                }
+            });
+        }
+
+        function modifyUserStatus(id, action) {
+            fetch('approve_user.php', { // Ensure this URL is correct
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id=${id}&action=${action}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data); // Debugging output
+                if (data.status === 'success') {
+                    if (data.email_status === 'sent') {
+                        Swal.fire(
+                            'Success!',
+                            action === 'approve' ? 'User approved and notified via email.' : 'User rejected and notified via email.',
+                            'success'
+                        );
+                    } else if (data.email_status === 'failed') {
+                        Swal.fire(
+                            'Warning!',
+                            'User status updated, but email notification failed. Error: ' + (data.email_error || 'Unknown error'),
+                            'warning'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Success!',
+                            'User status updated.',
+                            'success'
+                        );
+                    }
+                    setTimeout(() => { location.reload(); }, 2000); // Reload to reflect changes after 2 seconds
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred: ' + (data.error || 'Please try again.'),
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    'Error!',
+                    'An error occurred. Please try again.',
+                    'error'
+                );
+            });
+        }
+
+        function openTab(tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            event.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

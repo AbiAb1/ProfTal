@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
 
-    // Prepare a statement to fetch user details
     $stmt = $conn->prepare("SELECT admin_ID, username, password FROM admin WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();

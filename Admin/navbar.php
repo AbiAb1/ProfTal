@@ -5,15 +5,17 @@
 				<a href="#"><i class='bx bxs-inbox icon' ></i> Departments <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
 					<li><a href="departments.php">Subjects</a></li>
-					<li><a href="#">Badges</a></li>
-					<li><a href="#">Breadcrumbs</a></li>
+					<li><a href="grades.php">Grades</a></li>
+					<li><a href="#">Contents</a></li>
 					<li><a href="#">Button</a></li>
 				</ul>
 			</li>
-			<li><a href="subjects.php"><i class='bx bxs-chart icon' ></i>Departments</a></li>
-			<li><a href="users.php"><i class='bx bxs-widget icon' ></i> Users Approval</a></li>
-			<li class="divider" data-text="table and forms">Table and forms</li>
-			<li><a href="#"><i class='bx bx-table icon' ></i> Tables</a></li>
+			<li><a href="#"><i class='bx bxs-building icon' ></i>Departments</a></li>
+			<li><a href="users.php"><i class='bx bxs-user icon' ></i> Users Approval</a></li>
+			<!--<li class="divider" data-text="table and forms">Table and forms</li>-->
+			<li><a href="#"><i class='bx bx-task icon' ></i> Tasks</a></li>
+			<li><a href="#"><i class='bx bx-task icon' ></i> Reminder</a></li>
+			<li><a href="#"><i class='bx bx-task icon' ></i> Announcement</a></li>
 			<li>
 				<a href="#"><i class='bx bxs-notepad icon' ></i> Forms <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
