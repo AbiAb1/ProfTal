@@ -68,7 +68,7 @@
             gap: 20px;
         }
 
-        .grade {
+        .title {
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -79,11 +79,11 @@
             justify-content: space-between;
         }
 
-        .grade h3 {
+        .title h3 {
             margin: 0 0 10px;
         }
 
-        .grade p {
+        .title p {
             margin: 0 0 10px;
         }
 
@@ -203,7 +203,7 @@
             background-color: gray;
         }
 
-        .grade {
+        .title {
             position: relative; /* Ensures the arrow icon is positioned relative to the grade container */
         }
 
@@ -255,10 +255,10 @@
                 <h2>Create Grade</h2>
                 <form id="createGradeForm">
                     <input type="hidden" id="deptID" name="deptID" value="<?php echo htmlspecialchars($_GET['deptID']); ?>">
-                    <label for="grade">Grade:</label><br>
-                    <input type="text" id="grade" name="grade" required><br>
-                    <label for="section">Section:</label><br>
-                    <input type="text" id="section" name="section" required><br>
+                    <label for="title">Grade:</label><br>
+                    <input type="text" id="title" name="title" required><br>
+                    <label for="caption">Section:</label><br>
+                    <input type="text" id="caption" name="caption" required><br>
                     <button type="submit">Create</button>
                 </form>
             </div>
@@ -267,15 +267,15 @@
         <!-- Edit Grade Modal -->
         <div id="editModal" class="modal">
             <div class="modal-content">
-                <span class="close" id="editModalClose">&times;"></span>
+                <span class="close" id="editModalClose">&times;</span>
                 <h2>Edit Grade</h2>
                 <form id="editGradeForm">
-                    <input type="hidden" id="editGradeID" name="gradeID">
+                    <input type="hidden" id="editContentID" name="contentID">
                     <input type="hidden" id="deptID" name="deptID" value="<?php echo htmlspecialchars($_GET['deptID']); ?>">
-                    <label for="editGrade">Grade:</label><br>
-                    <input type="text" id="editGrade" name="grade" required><br>
-                    <label for="editSection">Section:</label><br>
-                    <input type="text" id="editSection" name="section" required><br>
+                    <label for="editTitle">Grade:</label><br>
+                    <input type="text" id="editTitle" name="title" required><br>
+                    <label for="editCaption">Section:</label><br>
+                    <input type="text" id="editCaption" name="caption" required><br>
                     <button type="submit">Update</button>
                 </form>
             </div>
@@ -287,6 +287,7 @@
             const deptID = new URLSearchParams(window.location.search).get('deptID');
             if (deptID) {
                 loadGrades(deptID);
+                loadDepartmentName(deptID); // Load department name
             }
 
             document.getElementById('createGradeForm').addEventListener('submit', function (event) {
@@ -318,22 +319,25 @@
                 .then(data => {
                     const container = document.getElementById('gradesContainer');
                     container.innerHTML = '';
-                    if (data.grades && data.grades.length) {
-                        data.grades.forEach(grade => {
+                    if (data.feedcontent && data.feedcontent.length) {
+                        data.feedcontent.forEach(title => {
                             const div = document.createElement('div');
-                            div.classList.add('grade');
+                            div.classList.add('title');
                             div.innerHTML = `
-                                <h3>${grade.grade}</h3>
-                                <p>Section: ${grade.section}</p>
+                                <h3>${title.Title}</h3>
+                                <p>Section: ${title.Captions}</p>   
                                 <div class="button-group">
-                                    <button onclick="editGrade(${grade.grades_ID}, '${grade.grade}', '${grade.section}')">Edit</button>
-                                    <button class="btn-small" onclick="deleteGrade(${grade.grades_ID})">Delete</button>
-                                    <a href="content.php?grades_ID=${grade.grades_ID}&grade=${grade.grade}&section=${grade.section}" class="arrow-link">
+                                    <button onclick="editGrade(${title.ContentD}, '${title.Title}', '${title.Captions}')">Edit</button>
+                                    <button class="btn-small" onclick="deleteGrade(${title.ContentID})">Delete</button>
+                                    <a href="content.php?ContentID=${title.ContentID}&Title=${title.Title}&Captions=${title.Captions}" class="arrow-link">
                                         <i class='bx bx-right-arrow-alt'></i>
                                     </a>
                                 </div>
                             `;
                             container.appendChild(div);
+
+                            // Load department name for this grade
+                            loadDepartmentName(title.deptID, title.ContentID);
                         });
                     } else {
                         container.innerHTML = '<p>No grades found.</p>';
@@ -341,14 +345,27 @@
                 });
         }
 
+        function loadDepartmentName(deptID, ContentID) {
+            fetch(`department_management.php?action=getName&deptID=${deptID}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById(`deptName-${ContentID}`).textContent = data.departmentName; // Update department name
+                    } else {
+                        console.error('Failed to fetch department name');
+                    }
+                })
+                .catch(error => console.error('Error fetching department name:', error));
+        }
+
         function createGrade() {
             const deptID = document.getElementById('deptID').value;
-            const grade = document.getElementById('grade').value;
-            const section = document.getElementById('section').value;
+            const title = document.getElementById('title').value;
+            const caption = document.getElementById('caption').value;
 
             fetch('grades_management.php?action=create', {
                 method: 'POST',
-                body: JSON.stringify({ grade, section, deptID }),
+                body: JSON.stringify({ title, caption, deptID }),
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -364,15 +381,15 @@
             .catch(error => console.error('Error:', error));
         }
 
-        function editGrade(gradeID, gradeValue, sectionValue) {
+        function editGrade(ContentID, titleValue, captionValue) {
             const editModal = document.getElementById('editModal');
-            const editGradeInput = document.getElementById('editGrade');
-            const editSectionInput = document.getElementById('editSection');
-            const editGradeIDInput = document.getElementById('editGradeID');
+            const editTitleInput = document.getElementById('editTitle');
+            const editCaptionInput = document.getElementById('editCaption');
+            const editContentIDInput = document.getElementById('editContentID');
 
-            editGradeInput.value = gradeValue;
-            editSectionInput.value = sectionValue;
-            editGradeIDInput.value = gradeID;
+            editTitleInput.value = titleValue;
+            editCaptionInput.value = captionValue;
+            editContentIDInput.value = ContentID;
 
             editModal.style.display = 'flex';
 
@@ -384,13 +401,13 @@
 
         function updateGrade() {
             const deptID = document.getElementById('deptID').value;
-            const gradeID = document.getElementById('editGradeID').value;
-            const grade = document.getElementById('editGrade').value;
-            const section = document.getElementById('editSection').value;
+            const ContentID = document.getElementById('editContentID').value;
+            const title = document.getElementById('editTitle').value;
+            const caption = document.getElementById('editCaption').value;
 
-            fetch('grades_management.php?action=update&id=' + gradeID, {
+            fetch('grades_management.php?action=update&id=' + ContentID, {
                 method: 'POST',
-                body: JSON.stringify({ grade, section, deptID }),
+                body: JSON.stringify({ title, caption, deptID }),
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())

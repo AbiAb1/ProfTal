@@ -7,6 +7,9 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -345,7 +348,7 @@
                                 <div class="button-group">
                                     <button onclick="showUpdateModal(${department.dept_ID}, '${department.dept_name}', '${department.dept_info}')">Update</button>
                                     <button class="btn-small" onclick="deleteDepartment(${department.dept_ID})">Delete</button>
-                                    <a href="grades.php?deptID=${department.dept_ID}" class="arrow-link">
+                                    <a href="grades.php?deptID=${department.dept_ID}&deptName=${department.dept_name}" class="arrow-link">
                                         <i class='bx bx-right-arrow-alt'></i>
                                     </a>
                                 </div>
@@ -373,9 +376,12 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    loadDepartments();
-                    document.getElementById('createDepartmentForm').reset();
+                    // Hide the modal
                     document.getElementById('createModal').style.display = 'none';
+                    // Reset the form
+                    document.getElementById('createDepartmentForm').reset();
+                    // Reload the departments to show the new department
+                    loadDepartments();
                 } else {
                     alert('Error creating department: ' + (data.message || 'Unknown error'));
                 }
@@ -426,6 +432,7 @@
             });
         }
     </script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

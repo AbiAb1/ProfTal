@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'approve') {
-        $stmt = $conn->prepare("UPDATE users SET status = 'approved' WHERE user_ID = ?");
+        $stmt = $conn->prepare("UPDATE useracc SET Status = 'approved' WHERE ID = ?");
         if ($stmt) {
             $stmt->bind_param("i", $id);
             if ($stmt->execute()) {
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->close();
 
                 // Fetch user details for email
-                $stmt = $conn->prepare("SELECT email, first_name, last_name, username, password FROM users WHERE user_ID = ?");
+                $stmt = $conn->prepare("SELECT email, fname, lname, Username, Password FROM useracc WHERE ID = ?");
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
                 $user = $stmt->get_result()->fetch_assoc();
@@ -46,12 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         // Recipients
                         $mail->setFrom('proftal2024@gmail.com', 'ProfTal');
-                        $mail->addAddress($user['email'], $user['first_name'] . ' ' . $user['last_name']); // Add recipient
+                        $mail->addAddress($user['email'], $user['fname'] . ' ' . $user['lname']); // Add recipient
 
                         // Content
                         $mail->isHTML(true);
                         $mail->Subject = 'Account Approved';
-                        $mail->Body    = "Dear {$user['first_name']} {$user['last_name']},<br><br>Your account has been approved! Your username and password are:<br><br>Username: {$user['username']}<br>Password: {$user['password']}<br><br>You may now login to the ProfTal.<br><br>Best regards,<br>Admin";
+                        $mail->Body    = "Dear {$user['fname']} {$user['lname']},<br><br>Your account has been approved! Your username and password are:<br><br>Username: {$user['Username']}<br>Password: {$user['Password']}<br><br>You may now login to the ProfTal.<br><br>Best regards,<br>Admin";
 
                         $mail->send();
                         $response['email_status'] = 'sent'; // Add email status
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['error'] = "SQL Prepare Error: " . $conn->error;
         }
     } elseif ($action === 'reject') {
-        $stmt = $conn->prepare("UPDATE users SET status = 'rejected' WHERE user_ID = ?");
+        $stmt = $conn->prepare("UPDATE useracc SET Status = 'rejected' WHERE ID = ?");
         if ($stmt) {
             $stmt->bind_param("i", $id);
             if ($stmt->execute()) {
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->close();
 
                 // Fetch user details for email
-                $stmt = $conn->prepare("SELECT email, first_name, last_name FROM users WHERE user_ID = ?");
+                $stmt = $conn->prepare("SELECT email, fname, lname FROM useracc WHERE ID = ?");
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
                 $user = $stmt->get_result()->fetch_assoc();
@@ -99,12 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         // Recipients
                         $mail->setFrom('proftal2024@gmail.com', 'ProfTal');
-                        $mail->addAddress($user['email'], $user['first_name'] . ' ' . $user['last_name']); // Add recipient
+                        $mail->addAddress($user['email'], $user['fname'] . ' ' . $user['lname']); // Add recipient
 
                         // Content
                         $mail->isHTML(true);
                         $mail->Subject = 'Account Rejected';
-                        $mail->Body    = "Dear {$user['first_name']} {$user['last_name']},<br><br>Your account has been rejected. Please contact support for further assistance.<br><br>Best regards,<br>Admin";
+                        $mail->Body    = "Dear {$user['fname']} {$user['lname']},<br><br>Your account has been rejected. Please contact support for further assistance.<br><br>Best regards,<br>Admin";
 
                         $mail->send();
                         $response['email_status'] = 'sent'; // Add email status

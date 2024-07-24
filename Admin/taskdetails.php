@@ -28,7 +28,7 @@ if (isset($_GET['task_id'])) {
         $task_title = $row_task_details['Title'];
         $task_description = $row_task_details['taskContent'];
         $task_type = $row_task_details['Type'];
-        $task_due_date = $row_task_details['Duedate']; // Assuming DueDate is the column name
+        $task_due_date = $row_task_details['DueDate']; // Assuming DueDate is the column name
     } else {
         echo "Task details not found.";
         exit(); // Exit if task details are not found

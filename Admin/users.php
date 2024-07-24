@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'approve') {
-        $stmt = $conn->prepare("UPDATE users SET status = 'approved' WHERE user_ID = ?");
+        $stmt = $conn->prepare("UPDATE useracc SET Status = 'approved' WHERE ID = ?");
     } elseif ($action === 'reject') {
-        $stmt = $conn->prepare("UPDATE users SET status = 'rejected' WHERE user_ID = ?");
+        $stmt = $conn->prepare("UPDATE useracc SET Status = 'rejected' WHERE ID = ?");
     }
 
     if (isset($stmt)) {
@@ -30,7 +30,7 @@ $statuses = ['pending', 'approved', 'rejected'];
 $usersByStatus = [];
 
 foreach ($statuses as $status) {
-    $stmt = $conn->prepare("SELECT user_ID, first_name, middle_initial, last_name, role, date_registered FROM users WHERE status = ?");
+    $stmt = $conn->prepare("SELECT ID, fname, mname, lname, role, date_registered FROM useracc WHERE Status = ?");
     $stmt->bind_param("s", $status);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -45,6 +45,7 @@ foreach ($statuses as $status) {
 $conn->close();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +55,7 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -78,22 +79,22 @@ $conn->close();
             cursor: pointer;
             background-color: #f2f2f2;
             transition: background-color 0.3s;
-            border-bottom: 2px solid transparent; /* Add bottom border to tab links */
+            border-bottom: 2px solid transparent;
         }
         .tabs button.active {
-            border-color: red; /* Red border for active tab */
+            border-color: red;
         }
         .user-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #fff; /* Set table background color to white */
+            background-color: #fff;
         }
         .user-table th, .user-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
-            background-color: #fff; /* Set cell background color to white */
+            background-color: #fff;
         }
         .user-table th {
             background-color: #f2f2f2;
@@ -128,12 +129,12 @@ $conn->close();
 
         .search-container .search-bar {
             display: none;
-            width: 100%; /* Adjust width of search bar */
-            max-width: 300px; /* Set a maximum width */
+            width: 100%;
+            max-width: 300px;
         }
 
         .search-bar input {
-            width: 200px; /* Adjust width as needed */
+            width: 200px;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -186,12 +187,12 @@ $conn->close();
                     <tbody>
                         <?php foreach ($usersByStatus['pending'] as $user): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['fname']) . ' ' . htmlspecialchars($user['mname']) . ' ' . htmlspecialchars($user['lname']); ?></td>
                             <td><?php echo htmlspecialchars($user['role']); ?></td>
                             <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
                             <td class="actions">
-                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'approve')" title="Approve"></i>
-                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'reject')" title="Reject"></i>
+                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['ID']; ?>, 'approve')" title="Approve"></i>
+                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['ID']; ?>, 'reject')" title="Reject"></i>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -211,11 +212,11 @@ $conn->close();
                     <tbody>
                         <?php foreach ($usersByStatus['approved'] as $user): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['fname']) . ' ' . htmlspecialchars($user['mname']) . ' ' . htmlspecialchars($user['lname']); ?></td>
                             <td><?php echo htmlspecialchars($user['role']); ?></td>
                             <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
                             <td class="actions">
-                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'reject')" title="Reject"></i>
+                                <i class="fas fa-times" onclick="confirmAction(<?php echo $user['ID']; ?>, 'reject')" title="Reject"></i>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -235,11 +236,11 @@ $conn->close();
                     <tbody>
                         <?php foreach ($usersByStatus['rejected'] as $user): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['middle_initial']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['fname']) . ' ' . htmlspecialchars($user['mname']) . ' ' . htmlspecialchars($user['lname']); ?></td>
                             <td><?php echo htmlspecialchars($user['role']); ?></td>
                             <td><?php echo htmlspecialchars(date('F j, Y', strtotime($user['date_registered']))); ?></td>
                             <td class="actions">
-                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['user_ID']; ?>, 'approve')" title="Approve"></i>
+                                <i class="fas fa-check" onclick="confirmAction(<?php echo $user['ID']; ?>, 'approve')" title="Approve"></i>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -256,27 +257,26 @@ $conn->close();
         }
 
         function filterTable() {
-            var input, filter, table, tr, td, i, j, txtValue;
+            var input, filter, tables, tr, td, i, j, txtValue;
             input = document.getElementById("searchInput");
             filter = input.value.toUpperCase();
-            var activeTable = document.querySelector('.tabcontent:target .user-table');
-            if (!activeTable) {
-                activeTable = document.getElementById("pendingTable");
-            }
-            tr = activeTable.getElementsByTagName("tr");
-            for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
-                tr[i].style.display = "none"; // Hide the row initially
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = ""; // Show the row if a match is found
-                            break; // Stop checking other cells in the same row
+            tables = document.querySelectorAll(".tabcontent table");
+            tables.forEach(function (table) {
+                tr = table.getElementsByTagName("tr");
+                for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                    tr[i].style.display = "none"; // Hide the row initially
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            txtValue = td[j].textContent || td[j].innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = ""; // Show the row if a match is found
+                                break; // Stop checking other cells in the same row
+                            }
                         }
                     }
                 }
-            }
+            });
         }
 
         function confirmAction(id, action) {
@@ -343,6 +343,7 @@ $conn->close();
             });
         }
 
+
         function openTab(tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -357,7 +358,6 @@ $conn->close();
             event.currentTarget.className += " active";
         }
 
-        // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
     </script>
 

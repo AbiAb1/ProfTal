@@ -12,11 +12,11 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    $grade = $conn->real_escape_string($data['grade']);
-    $section = $conn->real_escape_string($data['section']);
+    $title = $conn->real_escape_string($data['title']);
+    $caption = $conn->real_escape_string($data['caption']);
     $deptID = $conn->real_escape_string($data['deptID']);
 
-    $sql = "INSERT INTO grades (grade, section, dept_ID) VALUES ('$grade', '$section', '$deptID')";
+    $sql = "INSERT INTO feedcontent (Title, Captions, dept_ID) VALUES ('$title', '$caption', '$deptID')";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['status' => 'success']);
@@ -26,25 +26,25 @@ if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 } elseif ($action == 'read' && isset($_GET['deptID'])) {
     $deptID = $conn->real_escape_string($_GET['deptID']);
 
-    $sql = "SELECT * FROM grades WHERE dept_ID = '$deptID'";
+    $sql = "SELECT * FROM feedcontent WHERE dept_ID = '$deptID'";
     $result = $conn->query($sql);
 
-    $grades = [];
+    $feedcontent = [];
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $grades[] = [
-                'grades_ID' => $row['grades_ID'],
-                'grade' => $row['grade'],
-                'section' => $row['section'],
+            $feedcontent[] = [
+                'ContentID' => $row['ContentID'],
+                'Title' => $row['Title'],
+                'Captions' => $row['Captions'],
                 'dept_ID' => $row['dept_ID']
             ];
         }
     }
-    echo json_encode(['grades' => $grades]);
+    echo json_encode(['feedcontent' => $feedcontent]);
 } elseif ($action == 'delete' && isset($_GET['id'])) {
     $id = $conn->real_escape_string($_GET['id']);
 
-    $sql = "DELETE FROM grades WHERE grades_ID = '$id'";
+    $sql = "DELETE FROM feedcontent WHERE ContentID = '$id'";
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['status' => 'success']);
     } else {
@@ -53,11 +53,11 @@ if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 } elseif ($action == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    $grade = $conn->real_escape_string($data['grade']);
-    $section = $conn->real_escape_string($data['section']);
+    $title = $conn->real_escape_string($data['Title']);
+    $caption = $conn->real_escape_string($data['Captions']);
     $id = $conn->real_escape_string($_GET['id']);
 
-    $sql = "UPDATE grades SET grade = '$grade', section = '$section' WHERE grades_ID = '$id'";
+    $sql = "UPDATE feedcontent SET Title = '$title', Captions = '$caption'  WHERE ContentID = '$id'";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['status' => 'success']);
@@ -70,4 +70,3 @@ if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
-    

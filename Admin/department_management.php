@@ -12,17 +12,10 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Debug: Print the received data
-    error_log(print_r($data, true));
-
     $name = $conn->real_escape_string($data['name']);
     $info = $conn->real_escape_string($data['info']);
 
     $sql = "INSERT INTO department (dept_name, dept_info) VALUES ('$name', '$info')";
-
-    // Debug: Print the SQL query
-    error_log($sql);
-
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['status' => 'success']);
     } else {
@@ -38,8 +31,7 @@ if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
             $departments[] = [
                 'dept_ID' => $row['dept_ID'],
                 'dept_name' => $row['dept_name'],
-                'dept_info' => $row['dept_info'],
-                'link' => 'grades.php?deptID=' . $row['dept_ID']  // Add the link to the grades page
+                'dept_info' => $row['dept_info']
             ];
         }
     }
@@ -53,8 +45,49 @@ if ($action == 'create' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo json_encode(['status' => 'error', 'message' => $conn->error]);
     }
+} elseif ($action == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $id = $conn->real_escape_string($data['id']);
+    $name = $conn->real_escape_string($data['name']);
+    $info = $conn->real_escape_string($data['info']);
+
+    $sql = "UPDATE department SET dept_name = '$name', dept_info = '$info' WHERE dept_ID = '$id'";
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(['status' => 'success']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => $conn->error]);
+    }
 } else {
     echo json_encode(['status' => 'invalid action']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($_GET['action'] === 'getName') {
+        $deptID = $_GET['deptID'];
+        // Example SQL query to fetch department name based on deptID
+        $sql = "SELECT dept_name FROM department WHERE dept_ID = ?";
+        
+        // Prepare and execute the statement
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$deptID]);
+        
+        // Fetch the department name
+        $departmentName = $stmt->fetchColumn(); // Assuming departmentName is a column in your departments table
+        
+        if ($departmentName) {
+            $response = ['status' => 'success', 'dept_name' => $departmentName];
+            echo json_encode($response);
+        } else {
+            $response = ['status' => 'error', 'message' => 'Department name not found'];
+            echo json_encode($response);
+        }
+    }
+    // Add other actions if needed, like updating or deleting departments
+} else {
+    // Handle unsupported HTTP methods
+    http_response_code(405); // Method Not Allowed
+    echo json_encode(['error' => 'Method Not Allowed']);
 }
 
 $conn->close();
