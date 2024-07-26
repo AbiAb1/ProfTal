@@ -1,0 +1,252 @@
+[2024-07-24 21:25:21] Database connected successfully.
+[2024-07-24 21:25:21] Received form data: UserID = 1, ContentID = 3, Type = , Title = Task 5, DueDate = 2024-07-30, taskContent = sddsfsdfsdfsdf
+[2024-07-24 21:25:21] Number of files to upload: 1
+[2024-07-24 21:25:21] Processing file dashboard_2_4x.jpg: Type = jpg, Size = 138012, MimeType = image/jpeg
+[2024-07-24 21:25:21] File uploaded: dashboard_2_4x.jpg, Stored at: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:25:21] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES ( ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:25:21] Bound parameters: ContentID = 3, UserID = 1, Type = , Title = Task 5, DueDate = 2024-07-30, taskContent = sddsfsdfsdfsdf
+[2024-07-24 21:26:43] Database connected successfully.
+[2024-07-24 21:26:43] Received form data: UserID = 1, ContentID = 2, Type = Array, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfsd
+[2024-07-24 21:26:43] Number of files to upload: 1
+[2024-07-24 21:26:43] Processing file dashboard_2_4x.jpg: Type = jpg, Size = 138012, MimeType = image/jpeg
+[2024-07-24 21:26:43] File uploaded: dashboard_2_4x.jpg, Stored at: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:26:43] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES ( ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:26:43] Bound parameters: ContentID = 2, UserID = 1, Type = Array, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfsd
+[2024-07-24 21:26:43] Task added with ID: 17, UserID: 1, ContentID: 2
+[2024-07-24 21:26:43] Verifying task details: TaskID = 17, UserID = 1, Type = Array, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfsd
+[2024-07-24 21:26:43] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:26:43] Fetched content title: Grade 7 for ContentID: 2
+[2024-07-24 21:26:43] Notification added for TaskID 17, Title: Jamir Adrian Posted a new Array! (Grade 7)
+[2024-07-24 21:26:43] Document record added: FileName dashboard_2_4x.jpg, TaskID 17, Path: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:26:43] Database connection closed.
+[2024-07-24 21:28:28] Database connected successfully.
+[2024-07-24 21:28:28] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfdsf
+[2024-07-24 21:28:28] Number of files to upload: 1
+[2024-07-24 21:28:28] Processing file dashboard_2_4x.jpg: Type = jpg, Size = 138012, MimeType = image/jpeg
+[2024-07-24 21:28:28] File uploaded: dashboard_2_4x.jpg, Stored at: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:28:28] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES ( ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:28:28] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfdsf
+[2024-07-24 21:28:28] Task added with ID: 18, UserID: 1, ContentID: 3
+[2024-07-24 21:28:28] Verifying task details: TaskID = 18, UserID = 1, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = sdfgsdfsdfdsf
+[2024-07-24 21:28:28] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:28:28] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:28:28] Notification added for TaskID 18, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:28:28] Document record added: FileName dashboard_2_4x.jpg, TaskID 18, Path: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:28:28] Database connection closed.
+[2024-07-24 21:33:55] Database connected successfully.
+[2024-07-24 21:33:55] Received form data: UserID = 1, ContentID = 2, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = Akdjaksdhkjashdjkasd
+[2024-07-24 21:33:55] Number of files to upload: 1
+[2024-07-24 21:33:55] Processing file dashboard_2_4x.jpg: Type = jpg, Size = 138012, MimeType = image/jpeg
+[2024-07-24 21:33:55] File uploaded: dashboard_2_4x.jpg, Stored at: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:33:55] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:33:55] Bound parameters: ContentID = 2, UserID = 1, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = Akdjaksdhkjashdjkasd
+[2024-07-24 21:33:55] Task added with ID: 19, UserID: 1, ContentID: 2
+[2024-07-24 21:33:55] Verifying task details: TaskID = 19, UserID = 1, Type = Task, Title = Task 5, DueDate = 2024-07-31, taskContent = Akdjaksdhkjashdjkasd
+[2024-07-24 21:33:55] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:33:55] Fetched content title: Grade 7 for ContentID: 2
+[2024-07-24 21:33:55] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:33:55] Bound parameters for notifications: UserID = 1, TaskID = 19, ContentID = 2, Title = Jamir Adrian Posted a new Task! (Grade 7), Content = Task 5: Akdjaksdhkjashdjkasd, Status = 1
+[2024-07-24 21:33:55] Notification added for TaskID 19, Title: Jamir Adrian Posted a new Task! (Grade 7)
+[2024-07-24 21:33:55] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:33:55] Bound parameters for docu: UserID = 1, ContentID = 2, TaskID = 19, name = dashboard_2_4x.jpg, mimeType = image/jpeg, size = 138012, uri = Attachments/dashboard_2_4x.jpg, Status = 1, timestamp = 2024-07-24 21:33:55
+[2024-07-24 21:33:55] Document record added: FileName dashboard_2_4x.jpg, TaskID 19, Path: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:33:55] Database connection closed.
+[2024-07-24 21:37:48] Database connected successfully.
+[2024-07-24 21:37:48] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 6, DueDate = 2024-07-31, taskContent = sadasdasdasd
+[2024-07-24 21:37:48] Number of files to upload: 1
+[2024-07-24 21:37:48] Processing file dashboard_2_4x.jpg: Type = jpg, Size = 138012, MimeType = image/jpeg
+[2024-07-24 21:37:48] File uploaded: dashboard_2_4x.jpg, Stored at: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:37:48] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:37:48] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = Task 6, DueDate = 2024-07-31, taskContent = sadasdasdasd
+[2024-07-24 21:37:48] Task added with ID: 20, UserID: 1, ContentID: 3
+[2024-07-24 21:37:48] Verifying task details: TaskID = 20, UserID = 1, Type = Task, Title = Task 6, DueDate = 2024-07-31, taskContent = sadasdasdasd
+[2024-07-24 21:37:48] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:37:48] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:37:48] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:37:48] Bound parameters for notifications: UserID = 1, TaskID = 20, ContentID = 3, Title = Jamir Adrian Posted a new Task! (Grade 8), Content = Task 6: sadasdasdasd, Status = 1
+[2024-07-24 21:37:48] Notification added for TaskID 20, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:37:48] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:37:48] Bound parameters for docu: UserID = 1, ContentID = 3, TaskID = 20, name = dashboard_2_4x.jpg, mimeType = image/jpeg, size = 138012, uri = Attachments/dashboard_2_4x.jpg, Status = 1, timestamp = 2024-07-24 21:37:48
+[2024-07-24 21:37:48] Document record added: FileName dashboard_2_4x.jpg, TaskID 20, Path: Attachments/dashboard_2_4x.jpg
+[2024-07-24 21:37:48] Database connection closed.
+[2024-07-24 21:40:55] Database connected successfully.
+[2024-07-24 21:40:55] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = dfsdfsdf
+[2024-07-24 21:40:55] Number of files to upload: 1
+[2024-07-24 21:40:55] Processing file document-control-dashboard-management_rocketsheets-1-scaled.jpg: Type = jpg, Size = 491145, MimeType = image/jpeg
+[2024-07-24 21:40:55] File uploaded: document-control-dashboard-management_rocketsheets-1-scaled.jpg, Stored at: Attachments/document-control-dashboard-management_rocketsheets-1-scaled.jpg
+[2024-07-24 21:40:55] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:40:55] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = dfsdfsdf
+[2024-07-24 21:40:55] Task added with ID: 21, UserID: 1, ContentID: 3
+[2024-07-24 21:40:55] Verifying task details: TaskID = 21, UserID = 1, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = dfsdfsdf
+[2024-07-24 21:40:55] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:40:55] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:40:55] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:40:55] Bound parameters for notifications: UserID = 1, TaskID = 21, ContentID = 3, Title = Jamir Adrian Posted a new Task! (Grade 8), Content = Task 7: dfsdfsdf, Status = 1
+[2024-07-24 21:40:55] Notification added for TaskID 21, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:40:55] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:40:55] Bound parameters for docu: UserID = 1, ContentID = 3, TaskID = 21, name = document-control-dashboard-management_rocketsheets-1-scaled.jpg, mimeType = image/jpeg, size = 491145, uri = Attachments/document-control-dashboard-management_rocketsheets-1-scaled.jpg, Status = 1, timestamp = 2024-07-24 21:40:55
+[2024-07-24 21:40:55] Document record added: FileName document-control-dashboard-management_rocketsheets-1-scaled.jpg, TaskID 21, Path: Attachments/document-control-dashboard-management_rocketsheets-1-scaled.jpg
+[2024-07-24 21:40:55] Database connection closed.
+[2024-07-24 21:43:23] Database connected successfully.
+[2024-07-24 21:43:23] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = dsfsdfsdf, DueDate = 2024-07-29, taskContent = sdfsdfdsf
+[2024-07-24 21:43:23] Number of files to upload: 1
+[2024-07-24 21:43:23] Processing file stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg: Type = jpg, Size = 207559, MimeType = image/jpeg
+[2024-07-24 21:43:23] File uploaded: stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg, Stored at: Attachments/stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg
+[2024-07-24 21:43:23] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:43:23] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = dsfsdfsdf, DueDate = 2024-07-29, taskContent = sdfsdfdsf
+[2024-07-24 21:43:23] Task added with ID: 22, UserID: 1, ContentID: 3
+[2024-07-24 21:43:23] Verifying task details: TaskID = 22, UserID = 1, Type = Task, Title = dsfsdfsdf, DueDate = 2024-07-29, taskContent = sdfsdfdsf
+[2024-07-24 21:43:23] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:43:23] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:43:23] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:43:23] Bound parameters for notifications: UserID = 1, TaskID = 22, ContentID = 3, Title = Jamir Adrian Posted a new Task! (Grade 8), Content = dsfsdfsdf: sdfsdfdsf, Status = 1
+[2024-07-24 21:43:23] Notification added for TaskID 22, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:43:23] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:43:23] Bound parameters for docu: UserID = 1, ContentID = 3, TaskID = 22, name = stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg, mimeType = image/jpeg, size = 207559, uri = Attachments/stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg, Status = 1, timestamp = 2024-07-24 21:43:23
+[2024-07-24 21:43:23] Document record added: FileName stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg, TaskID 22, Path: Attachments/stock-photo-dashboard-document-management-system-software-charts-and-statistics-on-documents-corporate-2308624273.jpg
+[2024-07-24 21:43:23] Database connection closed.
+[2024-07-24 21:51:17] Database connected successfully.
+[2024-07-24 21:51:17] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 8, DueDate = 2024-07-31, taskContent = ssfsdfsdfsdf
+[2024-07-24 21:51:17] Number of files to upload: 1
+[2024-07-24 21:51:17] Processing file Cristina Abiog - BFSI.pdf: Type = pdf, Size = 197201, MimeType = application/pdf
+[2024-07-24 21:51:17] File uploaded: Cristina Abiog - BFSI.pdf, Stored at: Attachments/Cristina Abiog - BFSI.pdf
+[2024-07-24 21:51:17] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:51:17] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = Task 8, DueDate = 2024-07-31, taskContent = ssfsdfsdfsdf
+[2024-07-24 21:51:17] Task added with ID: 23, UserID: 1, ContentID: 3
+[2024-07-24 21:51:17] Verifying task details: TaskID = 23, UserID = 1, Type = Task, Title = Task 8, DueDate = 2024-07-31, taskContent = ssfsdfsdfsdf
+[2024-07-24 21:51:17] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:51:17] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:51:17] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:51:17] Bound parameters for notifications: UserID = 1, TaskID = 23, ContentID = 3, Title = Jamir Adrian Posted a new Task! (Grade 8), Content = Task 8: ssfsdfsdfsdf, Status = 1
+[2024-07-24 21:51:17] Notification added for TaskID 23, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:51:17] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:51:17] Bound parameters for docu: UserID = 1, ContentID = 3, TaskID = 23, name = Cristina Abiog - BFSI.pdf, mimeType = application/pdf, size = 197201, uri = Attachments/Cristina Abiog - BFSI.pdf, Status = 1, timestamp = 2024-07-24 21:51:17
+[2024-07-24 21:51:17] Document record added: FileName Cristina Abiog - BFSI.pdf, TaskID 23, Path: Attachments/Cristina Abiog - BFSI.pdf
+[2024-07-24 21:51:17] Database connection closed.
+[2024-07-24 21:53:56] Database connected successfully.
+[2024-07-24 21:53:56] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = asdasdasdas
+[2024-07-24 21:53:56] Number of files to upload: 1
+[2024-07-24 21:53:56] Processing file Walmart Rewards Mastercard.pptx: Type = pptx, Size = 10162562, MimeType = application/vnd.openxmlformats-officedocument.presentationml.presentation
+[2024-07-24 21:53:56] File too large: Walmart Rewards Mastercard.pptx
+[2024-07-24 21:53:56] Database connection closed.
+[2024-07-24 21:54:48] Database connected successfully.
+[2024-07-24 21:54:48] Received form data: UserID = 1, ContentID = 3, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = sdfsdfsdf
+[2024-07-24 21:54:48] Number of files to upload: 1
+[2024-07-24 21:54:48] Processing file IMG20230831155315.jpg: Type = jpg, Size = 3428914, MimeType = image/jpeg
+[2024-07-24 21:54:48] File uploaded: IMG20230831155315.jpg, Stored at: Attachments/IMG20230831155315.jpg
+[2024-07-24 21:54:48] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:54:48] Bound parameters: ContentID = 3, UserID = 1, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = sdfsdfsdf
+[2024-07-24 21:54:48] Task added with ID: 24, UserID: 1, ContentID: 3
+[2024-07-24 21:54:48] Verifying task details: TaskID = 24, UserID = 1, Type = Task, Title = Task 7, DueDate = 2024-07-31, taskContent = sdfsdfsdf
+[2024-07-24 21:54:48] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-24 21:54:48] Fetched content title: Grade 8 for ContentID: 3
+[2024-07-24 21:54:48] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-24 21:54:48] Bound parameters for notifications: UserID = 1, TaskID = 24, ContentID = 3, Title = Jamir Adrian Posted a new Task! (Grade 8), Content = Task 7: sdfsdfsdf, Status = 1
+[2024-07-24 21:54:48] Notification added for TaskID 24, Title: Jamir Adrian Posted a new Task! (Grade 8)
+[2024-07-24 21:54:48] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-24 21:54:48] Bound parameters for docu: UserID = 1, ContentID = 3, TaskID = 24, name = IMG20230831155315.jpg, mimeType = image/jpeg, size = 3428914, uri = Attachments/IMG20230831155315.jpg, Status = 1, timestamp = 2024-07-24 21:54:48
+[2024-07-24 21:54:48] Document record added: FileName IMG20230831155315.jpg, TaskID 24, Path: Attachments/IMG20230831155315.jpg
+[2024-07-24 21:54:48] Database connection closed.
+Update Task - TaskID: 24, ContentID: 2, Title: Task 7 sajdsajdyhs, DueDate: 2024-07-30, Instructions: sdfsdfsdf
+Update Task - TaskID: 19, ContentID: , Title: Task 5.1, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasd
+Update Task - TaskID: 19, ContentID: , Title: Task 5.1, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasd
+Update Task - TaskID: 19, ContentID: , Title: Task 5.1, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasd
+Update Task - TaskID: 19, ContentID: 3, Title: Task 5dfgfgd, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasd
+Update Task - TaskID: 19, ContentID: , Title: Task 5, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasdsdfsdf
+Update Task - TaskID: 19, ContentID: 2, Title: Task 5, DueDate: 2024-07-31, Instructions: Akdjaksdhkjashdjkasdsdfsdf
+Update Task - TaskID: 10, ContentID: 3, Title: Announcement 2sdfsdfsdf, DueDate: 2024-07-26, Instructions: uiuqwinaksldashda
+Update Task - TaskID: 10, ContentID: , Title: Announcement 2, DueDate: 2024-07-26, Instructions: uiuqwinaksldashda
+Update Task - TaskID: 10, ContentID: 2, Title: Announcement 2, DueDate: 2024-07-26, Instructions: uiuqwinaksldashda
+Received request to delete task with ID: 10Task with ID 10 deleted successfully.Update Task - TaskID: 6, ContentID: 3, Title: Reminder 3.1, DueDate: 2024-07-24, Instructions: grrrr kaiinis na 
+Received request to delete task with ID: 6Task with ID 6 deleted successfully.Update Task - TaskID: 6, ContentID: 2, Title: Task With Attachments, DueDate: 2024-07-31, Instructions: Test task with attachments testing
+[2024-07-25 19:00:43] Database connected successfully.
+[2024-07-25 19:00:43] Received form data: UserID = 1, ContentID = 1, Type = Task, Title = test, DueDate = 2024-08-07, taskContent = tesing
+[2024-07-25 19:00:43] Number of files to upload: 1
+[2024-07-25 19:00:43] Processing file 449615957_859086486068187_72971279929953762_n.jpg: Type = jpg, Size = 249360, MimeType = image/jpeg
+[2024-07-25 19:00:43] File uploaded: 449615957_859086486068187_72971279929953762_n.jpg, Stored at: Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:00:43] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:00:43] Bound parameters: ContentID = 1, UserID = 1, Type = Task, Title = test, DueDate = 2024-08-07, taskContent = tesing
+[2024-07-25 19:00:43] Task added with ID: 13, UserID: 1, ContentID: 1
+[2024-07-25 19:00:43] Verifying task details: TaskID = 13, UserID = 1, Type = Task, Title = test, DueDate = 2024-08-07, taskContent = tesing
+[2024-07-25 19:00:43] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-25 19:00:43] Fetched content title: Content Title 1 for ContentID: 1
+[2024-07-25 19:00:43] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:00:43] Bound parameters for notifications: UserID = 1, TaskID = 13, ContentID = 1, Title = Jamir Adrian Posted a new Task! (Content Title 1), Content = test: tesing, Status = 1
+[2024-07-25 19:00:43] Notification added for TaskID 13, Title: Jamir Adrian Posted a new Task! (Content Title 1)
+[2024-07-25 19:00:43] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:00:43] Bound parameters for docu: UserID = 1, ContentID = 1, TaskID = 13, name = 449615957_859086486068187_72971279929953762_n.jpg, mimeType = image/jpeg, size = 249360, uri = Attachments/449615957_859086486068187_72971279929953762_n.jpg, Status = 1, timestamp = 2024-07-25 19:00:43
+[2024-07-25 19:00:43] Document record added: FileName 449615957_859086486068187_72971279929953762_n.jpg, TaskID 13, Path: Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:00:43] Database connection closed.
+Update Task - TaskID: , ContentID: , Title: test, DueDate: , Instructions: tesing11
+Update Task - TaskID: 1, ContentID: , Title: Document Submission, DueDate: , Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed placerat nibh a nibh suscipit egestas. Quisque dapibus velit nec magna finibus consectetur. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc eu porttitor erat. Cras quis justo at sem consequat luctus vel ut mi. Phasellus dignissim gravida ultrices. 
+[2024-07-25 19:05:51] Database connected successfully.
+[2024-07-25 19:05:51] Received form data: UserID = 1, ContentID = 1, Type = Task, Title = adsadad, DueDate = 2024-08-08, taskContent = adasdsadad
+[2024-07-25 19:05:51] Number of files to upload: 1
+[2024-07-25 19:05:51] Processing file 449615957_859086486068187_72971279929953762_n.jpg: Type = jpg, Size = 249360, MimeType = image/jpeg
+[2024-07-25 19:05:51] File uploaded: 449615957_859086486068187_72971279929953762_n.jpg, Stored at: Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:05:51] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:05:51] Bound parameters: ContentID = 1, UserID = 1, Type = Task, Title = adsadad, DueDate = 2024-08-08, taskContent = adasdsadad
+[2024-07-25 19:05:51] Task added with ID: 14, UserID: 1, ContentID: 1
+[2024-07-25 19:05:51] Verifying task details: TaskID = 14, UserID = 1, Type = Task, Title = adsadad, DueDate = 2024-08-08, taskContent = adasdsadad
+[2024-07-25 19:05:51] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-25 19:05:51] Fetched content title: Content Title 1 for ContentID: 1
+[2024-07-25 19:05:51] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:05:51] Bound parameters for notifications: UserID = 1, TaskID = 14, ContentID = 1, Title = Jamir Adrian Posted a new Task! (Content Title 1), Content = adsadad: adasdsadad, Status = 1
+[2024-07-25 19:05:51] Notification added for TaskID 14, Title: Jamir Adrian Posted a new Task! (Content Title 1)
+[2024-07-25 19:05:51] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:05:51] Bound parameters for docu: UserID = 1, ContentID = 1, TaskID = 14, name = 449615957_859086486068187_72971279929953762_n.jpg, mimeType = image/jpeg, size = 249360, uri = Attachments/449615957_859086486068187_72971279929953762_n.jpg, Status = 1, timestamp = 2024-07-25 19:05:51
+[2024-07-25 19:05:51] Document record added: FileName 449615957_859086486068187_72971279929953762_n.jpg, TaskID 14, Path: Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:05:51] Database connection closed.
+[2024-07-25 19:08:06] Database connected successfully.
+[2024-07-25 19:08:06] Received form data: UserID = 1, ContentID = 1, Type = Task, Title = asdadad2, DueDate = 2024-07-27, taskContent = dasdsad
+[2024-07-25 19:08:06] Number of files to upload: 1
+[2024-07-25 19:08:06] Processing file Sign up-rafiki.png: Type = png, Size = 265939, MimeType = image/png
+[2024-07-25 19:08:06] File uploaded: Sign up-rafiki.png, Stored at: ./Attachments/Sign up-rafiki.png
+[2024-07-25 19:08:06] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:08:06] Bound parameters: ContentID = 1, UserID = 1, Type = Task, Title = asdadad2, DueDate = 2024-07-27, taskContent = dasdsad
+[2024-07-25 19:08:06] Task added with ID: 15, UserID: 1, ContentID: 1
+[2024-07-25 19:08:06] Verifying task details: TaskID = 15, UserID = 1, Type = Task, Title = asdadad2, DueDate = 2024-07-27, taskContent = dasdsad
+[2024-07-25 19:08:06] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-25 19:08:06] Fetched content title: Content Title 1 for ContentID: 1
+[2024-07-25 19:08:06] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:08:06] Bound parameters for notifications: UserID = 1, TaskID = 15, ContentID = 1, Title = Jamir Adrian Posted a new Task! (Content Title 1), Content = asdadad2: dasdsad, Status = 1
+[2024-07-25 19:08:06] Notification added for TaskID 15, Title: Jamir Adrian Posted a new Task! (Content Title 1)
+[2024-07-25 19:08:06] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:08:06] Bound parameters for docu: UserID = 1, ContentID = 1, TaskID = 15, name = Sign up-rafiki.png, mimeType = image/png, size = 265939, uri = ./Attachments/Sign up-rafiki.png, Status = 1, timestamp = 2024-07-25 19:08:06
+[2024-07-25 19:08:06] Document record added: FileName Sign up-rafiki.png, TaskID 15, Path: ./Attachments/Sign up-rafiki.png
+[2024-07-25 19:08:06] Database connection closed.
+[2024-07-25 19:10:17] Database connected successfully.
+[2024-07-25 19:10:17] Received form data: UserID = 1, ContentID = 1, Type = Task, Title = TESTING, DueDate = 2024-07-30, taskContent = TESTING
+[2024-07-25 19:10:17] Number of files to upload: 1
+[2024-07-25 19:10:17] Processing file Sign up-rafiki.png: Type = png, Size = 265939, MimeType = image/png
+[2024-07-25 19:10:17] File uploaded: Sign up-rafiki.png, Stored at: ../Attachments/Sign up-rafiki.png
+[2024-07-25 19:10:17] Preparing SQL query: INSERT INTO tasks (ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:10:17] Bound parameters: ContentID = 1, UserID = 1, Type = Task, Title = TESTING, DueDate = 2024-07-30, taskContent = TESTING
+[2024-07-25 19:10:17] Task added with ID: 16, UserID: 1, ContentID: 1
+[2024-07-25 19:10:17] Verifying task details: TaskID = 16, UserID = 1, Type = Task, Title = TESTING, DueDate = 2024-07-30, taskContent = TESTING
+[2024-07-25 19:10:17] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-25 19:10:17] Fetched content title: Content Title 1 for ContentID: 1
+[2024-07-25 19:10:17] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:10:17] Bound parameters for notifications: UserID = 1, TaskID = 16, ContentID = 1, Title = Jamir Adrian Posted a new Task! (Content Title 1), Content = TESTING: TESTING, Status = 1
+[2024-07-25 19:10:17] Notification added for TaskID 16, Title: Jamir Adrian Posted a new Task! (Content Title 1)
+[2024-07-25 19:10:17] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:10:17] Bound parameters for docu: UserID = 1, ContentID = 1, TaskID = 16, name = Sign up-rafiki.png, mimeType = image/png, size = 265939, uri = ../Attachments/Sign up-rafiki.png, Status = 1, timestamp = 2024-07-25 19:10:17
+[2024-07-25 19:10:17] Document record added: FileName Sign up-rafiki.png, TaskID 16, Path: ../Attachments/Sign up-rafiki.png
+[2024-07-25 19:10:17] Database connection closed.
+[2024-07-25 19:19:33] Database connected successfully.
+[2024-07-25 19:19:33] Received form data: UserID = 1, ContentID = 1, Type = Task, Title = TESTING ULIT, DueDate = 2024-07-24, taskContent = ASDASDASDSAD
+[2024-07-25 19:19:33] Number of files to upload: 1
+[2024-07-25 19:19:33] Processing file 449615957_859086486068187_72971279929953762_n.jpg: Type = jpg, Size = 249360, MimeType = image/jpeg
+[2024-07-25 19:19:33] File uploaded: 449615957_859086486068187_72971279929953762_n.jpg, Stored at: ../Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:19:33] Preparing SQL query: INSERT INTO tasks (TaskID, ContentID, UserID, Type, Title, DueDate, taskContent) VALUES (?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:19:33] Bound parameters: TaskID = 526532, ContentID = 1, UserID = 1, Type = Task, Title = TESTING ULIT, DueDate = 2024-07-24, taskContent = ASDASDASDSAD
+[2024-07-25 19:19:33] Task added with ID: 526532, UserID: 1, ContentID: 1
+[2024-07-25 19:19:33] Fetched user name: Jamir Adrian for UserID: 1
+[2024-07-25 19:19:33] Fetched content title: Content Title 1 for ContentID: 1
+[2024-07-25 19:19:33] Preparing SQL query for notifications: INSERT INTO notifications (UserID, TaskID, ContentID, Title, Content, Status) VALUES (?, ?, ?, ?, ?, ?)
+[2024-07-25 19:19:33] Bound parameters for notifications: UserID = 1, TaskID = 526532, ContentID = 1, Title = Jamir Adrian Posted a new Task! (Content Title 1), Content = TESTING ULIT: ASDASDASDSAD, Status = 1
+[2024-07-25 19:19:33] Notification added for TaskID 526532, Title: Jamir Adrian Posted a new Task! (Content Title 1)
+[2024-07-25 19:19:33] Preparing SQL query for docu: INSERT INTO docu (UserID, ContentID, TaskID, name, mimeType, size, uri, Status, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2024-07-25 19:19:33] Bound parameters for docu: UserID = 1, ContentID = 1, TaskID = 526532, name = 449615957_859086486068187_72971279929953762_n.jpg, mimeType = image/jpeg, size = 249360, uri = ../Attachments/449615957_859086486068187_72971279929953762_n.jpg, Status = 1, timestamp = 2024-07-25 19:19:33
+[2024-07-25 19:19:33] Document record added: FileName 449615957_859086486068187_72971279929953762_n.jpg, TaskID 526532, Path: ../Attachments/449615957_859086486068187_72971279929953762_n.jpg
+[2024-07-25 19:19:33] Database connection closed.

@@ -16,16 +16,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($password === $db_password) {
             $_SESSION['user_id'] = $userID;
             $_SESSION['username'] = $db_username;
+            $_SESSION['login_success'] = true; // Set session variable
+
+            // Close the previous statement before executing the update
+            $stmt->close();
+
+            // Update the StatusM column to "Active Now"
+            $updateStmt = $conn->prepare("UPDATE useracc SET StatusM = 'Active Now' WHERE UserID = ?");
+            $updateStmt->bind_param("i", $userID);
+            $updateStmt->execute();
+            $updateStmt->close();
+
             header("Location: dash.php");
             exit();
         } else {
-            echo "Invalid password.";
+            $_SESSION['login_success'] = false; // Set session variable for invalid password
+            header("Location: index.php");
+            exit();
         }
     } else {
-        echo "No user found with that username.";
+        $_SESSION['login_success'] = false; // Set session variable for no user found
+        header("Location: index.php");
+        exit();
     }
 
-    $stmt->close();
+    $stmt->close(); // Close the statement if it's not already closed
     $conn->close();
 }
 ?>
